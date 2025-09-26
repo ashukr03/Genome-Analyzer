@@ -1,160 +1,192 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 
-export default function KmerFrequencyResult() {
+export default function KmerFrequencyPage() {
   const [sequence, setSequence] = useState("");
   const [k, setK] = useState(3);
   const [motif, setMotif] = useState("");
-  const [filteredData, setFilteredData] = useState({});
-  const [displayCount, setDisplayCount] = useState(25);
+  const [result, setResult] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    const storedSeq = localStorage.getItem("DNASequence");
-    if (storedSeq) setSequence(storedSeq);
-  }, []);
-
-  const calculateKmerFrequency = (kValue) => {
-    const freq = {};
-    if (!sequence || sequence.length < kValue) return freq;
-    for (let i = 0; i <= sequence.length - kValue; i++) {
-      const kmer = sequence.substring(i, i + kValue).toUpperCase();
-      if (!freq[kmer]) freq[kmer] = [];
-      freq[kmer].push(i + 1);
+  // Handle file upload
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const text = await file.text();
+      setSequence(text.replace(/\s+/g, "").toUpperCase());
+      setFileName(file.name);
     }
-    return freq;
   };
 
-  const handleCheck = () => {
-    if (!motif) return alert("Please enter a motif to search!");
-    const freqData = calculateKmerFrequency(k);
-    const filtered = {};
-    for (let key in freqData) {
-      if (key.includes(motif.toUpperCase())) filtered[key] = freqData[key];
-    }
-    if (Object.keys(filtered).length === 0)
-      alert("No k-mers found for this motif!");
-    setFilteredData(filtered);
-    setDisplayCount(25);
+  // Clear sequence and file
+  const clearFileAndSequence = () => {
+    setSequence("");
+    setFileName("");
+    setResult(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleShowMore = () => setDisplayCount((prev) => prev + 25);
-  const handleKChange = (e) => {
-    setK(parseInt(e.target.value));
-    setFilteredData({});
-    setMotif("");
-    setDisplayCount(25);
+  // Analyze k-mers + motif
+  const analyzeKmers = () => {
+    if (!sequence) return alert("Please upload or enter a DNA sequence!");
+
+    // HashMap (Map) ka use
+    const countsMap = new Map();
+    const motifMatches = [];
+
+    for (let i = 0; i <= sequence.length - k; i++) {
+      const sub = sequence.substring(i, i + k);
+      countsMap.set(sub, (countsMap.get(sub) || 0) + 1);
+    }
+
+    if (motif) {
+      const motifUpper = motif.toUpperCase();
+      for (let i = 0; i <= sequence.length - motifUpper.length; i++) {
+        if (sequence.substring(i, i + motifUpper.length) === motifUpper) {
+          motifMatches.push(i + 1);
+        }
+      }
+    }
+
+    // Map ko normal object me convert karke result me store karte hain
+    const counts = Object.fromEntries(countsMap);
+
+    setResult({ counts, motifMatches });
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <motion.div className="p-8 max-w-4xl mx-auto">
 
       {/* Sticky Background */}
       <div
-        className="fixed inset-0 bg-cover bg-center -z-20 opacity-20"
-        style={{ backgroundImage: "url('/Login.webp')" }}
+        className="fixed inset-0 bg-cover bg-center -z-20 opacity-30"
+        style={{ backgroundImage: "url('/signup.webp')" }}
       ></div>
-
-      <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">
-        K-mer Frequency Analysis
+      
+      <h1 className="text-3xl font-bold text-blue-700 text-center mb-6">
+        🔬 K-mer Frequency Analysis
       </h1>
 
-      {/* Info Card */}
-      <div className="bg-white/50 backdrop-blur-lg p-6 rounded-2xl shadow-lg mb-6 text-gray-700">
-        <h2 className="text-xl font-semibold mb-2">
-          K-mer Frequency Analysis: Looking for Hidden Patterns
-        </h2>
-        <p className="mb-2">
-          While nucleotide count tells us what ingredients are present, K-mer analysis
-          reveals what recipes they form. A K-mer is a short subsequence of length k
-          (e.g., for k=3, the sequence ATGC gives codons like ATG, TGC).
-        </p>
-        <p className="mb-2">
-          Why is this powerful? Because DNA often hides signals in repeating short patterns.
-          Examples include:
-        </p>
-        <ul className="list-disc list-inside mb-2">
-          <li>Codon usage bias → preference for certain codons.</li>
-          <li>Motif discovery → regulatory sequences or repeats detection.</li>
-          <li>Genome assembly → overlapping k-mers help reconstruct sequences.</li>
-        </ul>
-        <p>
-          In short, K-mer frequency analysis provides insight into DNA organization and
-          supports applications from gene regulation studies to large-scale genome assembly.
-        </p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white/30 backdrop-blur-lg p-8 rounded-3xl shadow-xl mb-6"
+      >
+        {/* Sequence Input */}
+        <textarea
+          value={sequence}
+          onChange={(e) => setSequence(e.target.value.toUpperCase())}
+          placeholder="Paste DNA sequence (A,T,G,C)..."
+          className="w-full h-40 p-4 mb-4 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-white/60"
+        />
 
-      {/* Input Section */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6 justify-center items-center">
-        <div>
-          <label className="font-semibold mr-2">Select k-mer length:</label>
-          <select value={k} onChange={handleKChange} className="p-2 border rounded-md">
-            <option value={3}>3-mer</option>
-            <option value={4}>4-mer</option>
-            <option value={5}>5-mer</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="font-semibold mr-2">Enter Motif:</label>
+        {/* File Upload + K & Motif Inputs */}
+        <div className="flex flex-wrap gap-4 mb-4 items-center justify-center">
           <input
-            type="text"
-            value={motif}
-            onChange={(e) => setMotif(e.target.value)}
-            placeholder="e.g. ATG"
-            className="p-2 border rounded-md"
+            type="file"
+            accept=".txt,.fasta"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            className="hidden"
           />
-        </div>
-
-        <div>
           <button
-            onClick={handleCheck}
-            className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600"
+            onClick={() => fileInputRef.current.click()}
+            className="px-4 py-2 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 font-semibold"
           >
-            Check
+            Upload DNA File
           </button>
-        </div>
-      </div>
 
-      {/* Output Section */}
-      {Object.keys(filteredData).length === 0 ? (
-        <p className="text-center text-gray-600">
-          Enter a motif and click "Check" to see results.
-        </p>
-      ) : (
-        <>
-          <div className="flex flex-wrap justify-center gap-6">
-            {Object.entries(filteredData)
-              .slice(0, displayCount)
-              .map(([key, positions]) => (
-                <div
-                  key={key}
-                  className="min-w-[900px] max-w-[1000px] p-6 bg-white rounded-2xl shadow-xl flex flex-col"
-                >
-                  <h3 className="font-bold text-2xl mb-3 text-center">{key}</h3>
-                  <div className="border rounded-md p-3 bg-gray-50 break-words">
-                    <p className="text-md text-gray-700">
-                      Positions: {positions.join(", ")}
-                    </p>
-                  </div>
-                  <p className="text-md text-gray-500 mt-2 text-center">
-                    Count: {positions.length}
-                  </p>
-                </div>
-              ))}
-          </div>
-
-          {Object.keys(filteredData).length > displayCount && (
-            <div className="flex justify-center mt-6">
+          {fileName && (
+            <div className="flex items-center gap-3 bg-gray-100 px-4 py-1 rounded-full shadow">
+              <span className="truncate max-w-xs font-medium">📂 {fileName}</span>
               <button
-                onClick={handleShowMore}
-                className="px-6 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600"
+                onClick={clearFileAndSequence}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200"
               >
-                Show More
+                ❌
               </button>
             </div>
           )}
-        </>
+
+          {/* K input */}
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={k}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value >= 3 && value <= 6) setK(value);
+              }}
+              className="w-20 p-2 border rounded-lg"
+              min="3"
+              max="6"
+            />
+            <span>K-value</span>
+          </div>
+
+          {/* Motif input */}
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={motif}
+              onChange={(e) => setMotif(e.target.value.toUpperCase())}
+              placeholder="Enter motif (e.g. ATG)"
+              className="p-2 border rounded-lg"
+            />
+            <span>Motif</span>
+          </div>
+        </div>
+
+        {/* Analyze Button */}
+        <div className="flex justify-center">
+          <button
+            onClick={analyzeKmers}
+            className="w-64 py-3 rounded-xl text-white font-semibold bg-green-500 hover:bg-green-600"
+          >
+            Analyze Sequence
+          </button>
+        </div>
+      </motion.div>
+
+      {/* Results Section */}
+      {result && (
+        <motion.div
+          className="mt-6 p-6 bg-white rounded-2xl shadow-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <h2 className="font-bold text-xl mb-4 text-center">Results:</h2>
+
+          {/* K-mer Results */}
+          <div className="mb-6">
+            <h3 className="font-semibold text-lg mb-2">K-mer Frequencies:</h3>
+            <ul className="space-y-1 max-h-60 overflow-y-auto">
+              {Object.entries(result.counts).map(([kmer, count]) => (
+                <li key={kmer} className="text-gray-700">
+                  <span className="font-mono">{kmer}</span> → {count}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Motif Results */}
+          {motif && (
+            <div>
+              <h3 className="font-semibold text-lg mb-2">Motif Matches ({motif}):</h3>
+              {result.motifMatches.length > 0 ? (
+                <p className="text-gray-700">
+                  Found {result.motifMatches.length} times at positions: {result.motifMatches.join(", ")}
+                </p>
+              ) : (
+                <p className="text-red-500 text-center">Motif not found in sequence.</p>
+              )}
+            </div>
+          )}
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }
