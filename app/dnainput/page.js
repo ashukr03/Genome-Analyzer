@@ -1,8 +1,15 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import DNAInput from "../components/DNAInput";
 
+import DNAInput from "../components/DNAInput";
+import { useSearchParams } from "next/navigation";
+
+// Top-level page component
 export default function DNAInputPage() {
+  return <DNAInputWrapper />;
+}
+
+// Client-side wrapper to safely use useSearchParams()
+function DNAInputWrapper() {
   const searchParams = useSearchParams();
   const prefillSequence = searchParams.get("prefill") || "";
 
