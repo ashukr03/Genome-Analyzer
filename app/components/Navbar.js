@@ -3,9 +3,20 @@ import Link from "next/link";
 import { auth } from "../../lib/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/"); // Redirect to homepage after logout
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   return (
     <header className="w-full">
@@ -28,7 +39,7 @@ export default function Navbar() {
                 />
               )}
               <button
-                onClick={() => signOut(auth)}
+                onClick={handleLogout}
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition"
               >
                 Logout

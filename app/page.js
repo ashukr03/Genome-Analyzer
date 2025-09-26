@@ -1,13 +1,15 @@
 "use client";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [user] = useAuthState(auth);
+  const router = useRouter();
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Full-page fixed video background */}
+      {/* Video background */}
       <video
         autoPlay
         loop
@@ -16,10 +18,8 @@ export default function HomePage() {
         src="/Homepage.webm"
       />
 
-      {/* Fixed black overlay */}
       <div className="fixed top-0 left-0 w-full h-full bg-black/40 -z-10" />
 
-      {/* Overlay content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center p-6">
         {user ? (
           <>
@@ -31,11 +31,17 @@ export default function HomePage() {
             </p>
 
             <div className="flex gap-4">
-              <button className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition">
+              <button
+                onClick={() => router.push("/dnainput")}
+                className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition"
+              >
                 Analyze Genome
               </button>
-              <button className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition">
-                Explore Samples
+              <button
+                onClick={() => router.push("/aboutus")}
+                className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition"
+              >
+                About Us
               </button>
             </div>
           </>
