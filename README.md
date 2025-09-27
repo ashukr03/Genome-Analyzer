@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Genome-Analyzer 🧬
 
-## Getting Started
+**Genome-Analyzer** is a web-based bioinformatics dashboard for performing genome analysis tasks like nucleotide counting, K-mer frequency calculation, mutation detection, longest repeated substring detection, and gene family detection. The project is built with **Next.js (App Router)**, **React**, **Framer Motion**, and **Tailwind CSS**.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- **Nucleotide Count** – Count occurrences of A, T, G, C in DNA sequences.
+- **K-mer Frequency** – Compute frequency of K-length substrings.
+- **Longest Common Substring** – Find the longest common substring between sequences.
+- **Mutation Detection** – Identify mutations between two DNA sequences.
+- **Longest Repeated Substring** – Detect the longest repeated substring within a sequence.
+- **Gene Family Detection** – Analyze DNA sequences for gene families.
+- **Responsive UI** – Works on desktop and mobile.
+- **Animated Dashboard** – Smooth transitions with Framer Motion.
+- **File Upload Support** – Upload sequences directly from your device.
+
+---
+
+## 📁 Project Structure
+
+genome-analyzer/
+├─ app/
+│ ├─ dnainput/ # DNA input page
+│ ├─ results/ # Result pages for all algorithms
+│ ├─ components/ # React components (Navbar, DNAInput, etc.)
+│ ├─ layout.js # Root layout
+│ └─ page.js # Home page
+├─ public/
+│ ├─ images/ # Image assets
+├─ .next/ # Next.js build folder
+├─ package.json
+├─ tailwind.config.js
+└─ README.md
+
+---
+
+## ⚡ Tech Stack
+
+- **Frontend:** React, Tailwind CSS, Framer Motion  
+- **Backend / Framework:** Next.js 15 (App Router)  
+- **Deployment:** Vercel (optimized for static and dynamic rendering)  
+- **Version Control:** Git & GitHub  
+
+---
+
+## 💻 Installation
+
+1. Clone the repository:
 
 ```bash
+git clone https://github.com/ashukr03/Genome-Analyzer.git
+cd Genome-Analyzer
+Install dependencies:
+
+npm install
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🌐 Deployment
+Deployed on Vercel: The project supports static and server-side rendering.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Make sure all image paths in /public are lowercase to avoid Linux deployment issues.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+📝 Usage
+Go to the Genome Analysis Dashboard.
 
-## Learn More
+Select the desired algorithm from the cards.
 
-To learn more about Next.js, take a look at the following resources:
+Input your DNA sequence (or upload a file).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Click Submit to view results.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Navigate between different algorithms via the dashboard.
 
-## Deploy on Vercel
+⚙️ Notes
+Background images and assets must have consistent lowercase file names for deployment on Linux servers (Vercel).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+React Image component from next/image is used for optimized images.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All pages are pre-rendered when possible for performance.
+
+👨‍💻 Author
+Ashutosh Kumar – MCA Student & Developer
+
+GitHub: ashukr03
