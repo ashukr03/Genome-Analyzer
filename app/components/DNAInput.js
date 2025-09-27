@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const algorithms = [
   { name: "Nucleotide Count", image: "/images/nucleotide.webp", route: "/results/nucleotide-count" },
@@ -36,10 +37,12 @@ export default function DNAInput() {
             whileHover={{ border: "2px solid #3b82f6" }}
           >
             <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden relative">
-              <img
+              <Image
                 src={task.image}
                 alt={task.name}
-                className="w-full h-full object-cover rounded-full"
+                width={96}
+                height={96}
+                className="object-cover rounded-full"
               />
               <div className="absolute inset-0 rounded-full bg-blue-300/20 blur-xl"></div>
             </div>
