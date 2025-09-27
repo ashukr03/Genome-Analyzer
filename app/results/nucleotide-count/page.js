@@ -62,7 +62,7 @@ export default function NucleotideCountPage() {
       {/* Sticky Background */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-20 opacity-30"
-        style={{ backgroundImage: "url('/signup.webp')" }}
+        style={{ backgroundImage: "url('/Signup.webp')" }}
       ></div>
 
       <h1 className="text-3xl font-bold text-center text-blue-700 mb-6">
