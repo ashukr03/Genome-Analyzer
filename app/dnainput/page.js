@@ -15,3 +15,4 @@ function DNAInputWrapper() {
 
   return <DNAInput prefillSequence={prefillSequence} />;
 }
+export const dynamic = "force-dynamic";
