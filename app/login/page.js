@@ -93,8 +93,9 @@ export default function LoginPage() {
             {loading ? "Logging in..." : "Login with Email"}
           </button>
         </form>
-
-        {/* OAuth Buttons */}
+       
+       
+        {/* Google Login Button */}
         <button
           onClick={() => handleOAuthLogin(googleProvider)}
           className="flex items-center justify-center w-full mb-4 py-3 px-4 rounded-lg bg-red-500 hover:bg-red-600 text-white font-semibold transition-all duration-300 shadow-lg hover:scale-[1.02]"
@@ -102,11 +103,14 @@ export default function LoginPage() {
           <Image
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"
-            className="w-6 h-6 mr-2"
+            width={24}
+            height={24}
+            className="mr-2"
           />
           Sign in with Google
         </button>
 
+        {/* GitHub Login Button */}
         <button
           onClick={() => handleOAuthLogin(githubProvider)}
           className="flex items-center justify-center w-full py-3 px-4 rounded-lg bg-gray-800 hover:bg-gray-900 text-white font-semibold transition-all duration-300 shadow-lg hover:scale-[1.02]"
@@ -114,7 +118,9 @@ export default function LoginPage() {
           <Image
             src="https://www.svgrepo.com/show/475654/github-color.svg"
             alt="GitHub"
-            className="w-6 h-6 mr-2"
+            width={24}
+            height={24}
+            className="mr-2"
           />
           Sign in with GitHub
         </button>
