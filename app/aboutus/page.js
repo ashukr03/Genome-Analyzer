@@ -6,19 +6,19 @@ const teamMembers = [
     name: "Aditya Shrestha (Team Leader)",
     role: "Algorithm & Core Logic",
     bio: "Implemented suffix array construction in JavaScript, tested with sample DNA sequences, wrote helper functions for substring search and repeats, and prepared integration with Firestore.",
-    image: "/images/aditya.webp", // Replace with actual image path
+    image: "/images/Addy.jpg",
   },
   {
     name: "Khusi Panwar",
     role: "Backend & Firebase Setup",
     bio: "Initialized Firebase project, configured authentication (email/password), created Firestore schema for users, sequences, and results, and documented setup steps for future phases.",
-    image: "/images/khusi.webp", // Replace with actual image path
+    image: "/images/Khusi.jpg", 
   },
   {
     name: "Ashutosh Kumar",
     role: "Frontend & UI Setup",
     bio: "Set up React + TailwindCSS project structure, built authentication UI (login/signup forms), created sequence upload form, and ensured responsive design and polished styling.",
-    image: "/images/ashutosh.webp", // Replace with actual image path
+    image: "/images/Ashu.jpg",
   },
 ];
 
