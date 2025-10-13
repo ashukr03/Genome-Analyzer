@@ -9,7 +9,7 @@ const teamMembers = [
     image: "/images/Addy.jpg",
   },
   {
-    name: "Khusi Panwar",
+    name: "Khushi Panwar",
     role: "Backend & Firebase Setup",
     bio: "Initialized Firebase project, configured authentication (email/password), created Firestore schema for users, sequences, and results, and documented setup steps for future phases.",
     image: "/images/Khusi.jpg", 

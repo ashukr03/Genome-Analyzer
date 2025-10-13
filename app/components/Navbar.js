@@ -4,7 +4,7 @@ import { auth } from "../../lib/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import Image from "next/image"; 
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
