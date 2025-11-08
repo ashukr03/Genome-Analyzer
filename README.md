@@ -20,20 +20,37 @@
 
 ## 📁 Project Structure
 
-genome-analyzer/
-├─ app/
-│ ├─ dnainput/ # DNA input page
-│ ├─ results/ # Result pages for all algorithms
-│ ├─ components/ # React components (Navbar, DNAInput, etc.)
-│ ├─ layout.js # Root layout
-│ └─ page.js # Home page
-├─ public/
-│ ├─ images/ # Image assets
-├─ .next/ # Next.js build folder
-├─ package.json
-├─ tailwind.config.js
-└─ README.md
-
+```
+GENOME-ANALYZER/
+│
+├── app/
+│   ├── aboutus/
+│   ├── components/
+│   ├── dnainput/
+│   ├── login/
+│   ├── readMore/
+│   ├── results/
+│   │   ├── gene-family-detection/
+│   │   ├── kmer-frequency/
+│   │   ├── longest-common-substring/
+│   │   ├── longest-repeated-substring/
+│   │   ├── mutation-detection/
+│   │   └── nucleotide-count/
+│   ├── signup/
+│   ├── globals.css
+│   ├── layout.js
+│   └── page.js      # Homepage
+│
+├── fastafiles/      # Sample FASTA inputs
+├── lib/             # Algorithms & utilities
+│
+├── public/
+│   └── images/      # UI assets
+│
+├── package.json
+├── next.config.js
+└── README.md
+```
 ---
 
 ## ⚡ Tech Stack
@@ -77,13 +94,15 @@ Click Submit to view results.
 Navigate between different algorithms via the dashboard.
 
 ⚙️ Notes
-Background images and assets must have consistent lowercase file names for deployment on Linux servers (Vercel).
+- Background images and assets must have consistent lowercase file names for deployment on Linux servers (Vercel).
 
-React Image component from next/image is used for optimized images.
+- React Image component from next/image is used for optimized images.
 
-All pages are pre-rendered when possible for performance.
+- All pages are pre-rendered when possible for performance.
+
+## 🔗 Live Demo  
+**➡️ [Click here to use the Genome Analyzer](https://genome-analyzer.vercel.app/)**
 
 👨‍💻 Author
-Ashutosh Kumar – MCA Student & Developer
-
+Ashutosh Kumar
 GitHub: ashukr03
