@@ -66,7 +66,7 @@ export default function Tutorial({ onFinish }) {
           <h2 className="text-4xl font-bold mb-4">{steps[step].title}</h2>
           <p className="text-lg mb-6 max-w-2xl">{steps[step].text}</p>
 
-          {/* Tutorial image */}
+          {/*  Tutorial image  */}
           <motion.img
             key={steps[step].image}
             src={steps[step].image}
